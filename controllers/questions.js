@@ -42,9 +42,19 @@ const update = async(req, res) => {
   }
 }
 
+const deleteQuestion = async(req, res) => {
+  try {
+    await Question.findByIdAndDelete(req.params.id)
+    return res.status(204).end()
+  } catch(err) {
+    return res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
   show,
-  update
+  update,
+  deleteQuestion as delete
 }
