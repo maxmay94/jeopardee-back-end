@@ -15,7 +15,6 @@ const create = async(req, res) => {
 
 const index = async(req, res) => {
   try {
-    console.log('in try')
     const questions = await Question.find({})
       .sort({createdAt: 'desc'})
       return res.status(200).json(questions)
