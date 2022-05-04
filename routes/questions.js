@@ -6,7 +6,7 @@ const router = Router()
 
 /* -------------------- Public Routes -------------------- */
 router.get('/', questionsCtrl.index)
-// router.get('/:id', questionsCtrl.show)
+router.get('/:id', questionsCtrl.show)
 // router.get('/play', questionsCtrl.play)
 
 /* -------------------- Private Routes ------------------- */
