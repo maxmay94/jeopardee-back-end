@@ -5,7 +5,10 @@ const API_URL = process.env.API_BASE_URL
 
 const index = async (req, res) => {
   try {
-
+    console.log('in try')
+    const questions = await Question.find({})
+      .sort({createdAt: 'desc'})
+      return res.status(200).json(questions)
   } catch (err) {
     return res.status(500).json(err)
   }
