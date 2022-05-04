@@ -12,7 +12,7 @@ router.get('/:id', questionsCtrl.show)
 /* -------------------- Private Routes ------------------- */
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, questionsCtrl.create)
-// router.put('/:id', checkAuth, questionsCtrl.update)
+router.put('/:id', checkAuth, questionsCtrl.update)
 // router.delete('/:id', checkAuth, questionsCtrl.delete)
 
 export { router }

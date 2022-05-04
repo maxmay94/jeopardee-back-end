@@ -33,8 +33,18 @@ const show = async(req, res) => {
   }
 }
 
+const update = async(req, res) => {
+  try {
+    const question = await Question.findByIdAndUpdate(req.params.id, req.body)
+    return res.status(201).json(question)
+  } catch(err) {
+    return res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
-  show
+  show,
+  update
 }
