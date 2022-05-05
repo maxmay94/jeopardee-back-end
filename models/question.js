@@ -30,7 +30,7 @@ const questionSchema = new Schema(
         2000
       ]
     },
-    imageURL: { type: String },
+    URL: { type: String },
   },
   { timestamps: true }
 )

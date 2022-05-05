@@ -4,6 +4,7 @@ const API_URL = process.env.API_BASE_URL
 
 
 const create = async(req, res) => {
+  console.log('req.body ----->> ',req.body)
   try {
     const question = await new Question(req.body)
     await question.save()
@@ -50,10 +51,20 @@ const deleteQuestion = async(req, res) => {
   }
 }
 
+const getCategories = async(req, res) => {
+  try {
+    const categories = await Question.distinct('category')
+    return res.status(201).json(categories)
+  } catch(err) {
+    return res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
   show,
   update,
-  deleteQuestion as delete
+  deleteQuestion as delete,
+  getCategories
 }
