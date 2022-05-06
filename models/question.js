@@ -24,10 +24,7 @@ const questionSchema = new Schema(
         400,
         600,
         800,
-        1000,
-        1200,
-        1600,
-        2000
+        1000
       ]
     },
     URL: { type: String },
