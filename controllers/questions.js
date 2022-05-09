@@ -62,7 +62,7 @@ const getCategories = async(req, res) => {
 
 const play = async(req, res) => {
   try {
-    const categories = await Question.distinct('question')
+    const categories = await Question.where('category').equals('wine by the glass')
     console.log(categories)
   } catch(err) {
     return res.status(500).json(err)
