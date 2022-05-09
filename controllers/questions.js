@@ -60,11 +60,21 @@ const getCategories = async(req, res) => {
   }
 }
 
+const play = async(req, res) => {
+  try {
+    const categories = await Question.distinct('question')
+    console.log(categories)
+  } catch(err) {
+    return res.status(500).json(err)
+  }
+}
+
 export {
   create,
   index,
   show,
   update,
   deleteQuestion as delete,
-  getCategories
+  getCategories,
+  play
 }
