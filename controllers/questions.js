@@ -18,7 +18,8 @@ const create = async(req, res) => {
 const index = async(req, res) => {
   try {
     const questions = await Question.find({})
-      .sort({createdAt: 'desc'})
+      .sort({category: 'desc'})
+      .sort({difficulty: 'desc'})
       return res.status(200).json(questions)
   } catch(err) {
     return res.status(500).json(err)
@@ -70,38 +71,40 @@ const play = async(req, res) => {
     five: ''
   }
 
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array
+  }
+
   let questions = []
   try {
-    const category = await Question.where('category', 'wine by the glass')
-    console.log('||||||||||||||||', qList)
-    
+    const categories = await Question.distinct('category')
+    shuffleArray(categories)
 
-    Object.values(qList).forEach((q, i) => {
-      console.log((i + 1) * 200)
-      while(q === '') {
-        let temp = category[Math.floor(Math.random() * category.length)]
-        if(temp.difficulty === ((i + 1) * 200)) {
-          console.log(temp)
-          q = temp._id
-          questions.push(temp)
-        }
+    const category = await Question.where('category', categories[1])
+    // console.log(categories)
+
+    categories.forEach(cat => {
+      // const category = await Question.where('category', cat)
+      let qs = []
+      if(category.length >= 5) {
+        Object.values(qList).forEach((q, i) => {
+          console.log((i + 1) * 200)
+          while(q === '') {
+            let temp = category[Math.floor(Math.random() * category.length)]
+            if(temp.difficulty === ((i + 1) * 200)) {
+              // console.log(temp)
+              q = temp._id
+              qs.push(temp)
+            }
+          }
+        })
+        questions.push(qs)
       }
     })
-
-    // const q1 = await Question.where('difficulty', 200)
-    // qList.push(q1[Math.floor(Math.random() * q1.length)])
-
-    // const q2 = await Question.where('difficulty', 400)
-    // qList.push(q2[Math.floor(Math.random() * q2.length)])
-
-    // const q3 = await Question.where('difficulty', 600)
-    // qList.push(q3[Math.floor(Math.random() * q3.length)])
-
-    // const q4 = await Question.where('difficulty', 800)
-    // qList.push(q4[Math.floor(Math.random() * q4.length)])
-
-    // const q5 = await Question.where('difficulty', 1000)
-    // qList.push(q5[Math.floor(Math.random() * q5.length)])
 
     return res.status(201).json(questions)
   } catch(err) {
