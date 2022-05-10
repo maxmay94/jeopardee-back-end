@@ -1,5 +1,6 @@
 import { query } from 'express'
 import { Question } from '../models/question.js'
+import fetch from 'node-fetch'
 
 const API_URL = process.env.API_BASE_URL
 
@@ -74,7 +75,9 @@ const play = async(req, res) => {
   }
 
   let questions = []
+
   try {
+
     const categories = await Question.distinct('category')
     shuffleArray(categories)
 
@@ -83,11 +86,9 @@ const play = async(req, res) => {
       let qs = []
       if(category.length >= 5) {
         Object.values(qList).forEach((q, i) => {
-          console.log((i + 1) * 200)
           while(q === '') {
             let temp = category[Math.floor(Math.random() * category.length)]
             if(temp.difficulty === ((i + 1) * 200)) {
-              // console.log(temp)
               q = temp._id
               qs.push(temp)
             }
@@ -97,10 +98,33 @@ const play = async(req, res) => {
       }
     }
 
+    if(questions.length < 6) {
+      console.log('[][][] not enough categories [][][]')
+      let jep = `${API_URL}random`
+      console.log(jep)
+      getJeopardy(jep)
+        .then(data => {
+          let tempQ = {
+            answer: data[0].answer,
+            question: data[0].question,
+            difficulty: data[0].value,
+            category: data[0].category.title
+          }
+          questions.push(tempQ)
+          console.log(questions)
+        })
+    }
+
     return res.status(201).json(questions)
+
   } catch(err) {
+
     return res.status(500).json(err)
   }
+}
+
+async function getJeopardy(jep) {
+  return fetch(jep).then((res) => res.json())
 }
 
 export {
