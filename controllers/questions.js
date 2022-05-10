@@ -63,18 +63,12 @@ const getCategories = async(req, res) => {
 }
 
 const play = async(req, res) => {
-  let qList = {
-    one: '',
-    two: '',
-    three: '',
-    four: '',
-    five: ''
-  }
+  let qList = { one: '', two: '', three: '', four: '', five: '' }
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
     }
     return array
   }
@@ -84,11 +78,8 @@ const play = async(req, res) => {
     const categories = await Question.distinct('category')
     shuffleArray(categories)
 
-    const category = await Question.where('category', categories[1])
-    // console.log(categories)
-
-    categories.forEach(cat => {
-      // const category = await Question.where('category', cat)
+    for(const cat in categories){
+      const category = await Question.where('category', categories[cat])
       let qs = []
       if(category.length >= 5) {
         Object.values(qList).forEach((q, i) => {
@@ -104,7 +95,7 @@ const play = async(req, res) => {
         })
         questions.push(qs)
       }
-    })
+    }
 
     return res.status(201).json(questions)
   } catch(err) {
