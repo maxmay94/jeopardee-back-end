@@ -66,18 +66,9 @@ const getCategories = async(req, res) => {
 const play = async(req, res) => {
   let qList = { one: '', two: '', three: '', four: '', five: '' }
 
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array
-  }
-
   let questions = []
 
   try {
-
     const categories = await Question.distinct('category')
     shuffleArray(categories)
 
@@ -105,37 +96,47 @@ const play = async(req, res) => {
     return res.status(201).json(questions)
 
   } catch(err) {
+    console.log(err)
     return res.status(500).json(err)
   }
 }
 
-const fixData = async() => {
-  let qs = []
-  let jep = `${API_URL}random?count=5`
+/* --------------------------------------------------- HELPER FUNCTIONS --------------------------------------------------- */
 
-  if(qs.length < 5) {
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array
+}
+
+const fixData = async() => {
+  let fixedQuestions = []
+
+  if(fixedQuestions.length < 5) {
     await getJeopardy()
       .then(data => {
-        data.forEach((q,i) => {
+        data.forEach((question,i) => {
           let tempQ = {
-            answer: data[i].answer,
-            question: data[i].question,
-            difficulty: data[i].value,
-            category: data[i].category.title
+            answer: data[i]?.answer,
+            question: data[i]?.question,
+            difficulty: data[i]?.value,
+            category: data[i]?.category?.title
         }
-        qs.push(tempQ)
-        // console.log('Qs ~~>',qs)
+        fixedQuestions.push(tempQ)
       })
     })
   }
-  return qs
+  return fixedQuestions
 }
 
 const getJeopardy = async() => {
   let questions = []
   let category = [4,6,7,9,11,19,24,36,43,48,49,51,58,67,79,83,92,115,542]
+  shuffleArray(category)
   let rand = Math.floor(Math.random() * category.length)
-  console.log('RANDOM NUMBER ---->> ',rand)
+  
   try{
     let data = await Promise.all([
       fetch(`${API_URL}clues?value=${200}&category=${category[rand]}`),
@@ -150,6 +151,7 @@ const getJeopardy = async() => {
     })
     return questions
   } catch(error) {
+    console.log('error')
     return res.status(500).json(err)
   }
 }
