@@ -99,20 +99,27 @@ const play = async(req, res) => {
     }
 
     if(questions.length < 6) {
-      console.log('[][][] not enough categories [][][]')
-      let jep = `${API_URL}random`
-      console.log(jep)
-      getJeopardy(jep)
-        .then(data => {
-          let tempQ = {
-            answer: data[0].answer,
-            question: data[0].question,
-            difficulty: data[0].value,
-            category: data[0].category.title
-          }
-          questions.push(tempQ)
-          console.log(questions)
-        })
+      let qs = []
+      let jep = `${API_URL}random?count=5`
+
+      if(qs.length < 5) {
+        getJeopardy(jep)
+          .then(data => {
+            console.log(data)
+            data.forEach((q,i) => {
+              let tempQ = {
+                answer: data[i].answer,
+                question: data[i].question,
+                difficulty: data[i].value,
+                category: data[i].category.title
+              }
+              qs.push(tempQ)
+              console.log('Qs ~~>',qs)
+            })
+          })
+        }
+        questions.push(qs)
+        console.log(questions)
     }
 
     return res.status(201).json(questions)
