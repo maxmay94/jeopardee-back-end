@@ -121,13 +121,12 @@ const play = async(req, res) => {
           })
         }
         questions.push(qs)
-        console.log(questions)
+        // console.log(questions)
     }
 
     return res.status(201).json(questions)
 
   } catch(err) {
-
     return res.status(500).json(err)
   }
 }
@@ -137,44 +136,31 @@ const play = async(req, res) => {
 //   return fetch(jep).then((res) => res.json())
 // }
 
-async function getJeopardy() {
+const getJeopardy = async() => {
   let questions = []
   let category = [4,6,7,9,11,19,24,36,43,48,49,51,58,67,79,83,92,115,542]
   let rand = Math.floor(Math.random() * category.length)
 
-  await fetch(`${API_URL}clues?value=${200}&category=${category[rand]}`)
-    .then(data => data.json())
-    .then(data => {
-      questions.push(data[Math.floor(Math.random() * data.length)])
+  try{
+    let data = await Promise.all([
+      fetch(`${API_URL}clues?value=${200}&category=${category[rand]}`),
+      fetch(`${API_URL}clues?value=${400}&category=${category[rand]}`),
+      fetch(`${API_URL}clues?value=${600}&category=${category[rand]}`),
+      fetch(`${API_URL}clues?value=${800}&category=${category[rand]}`),
+      fetch(`${API_URL}clues?value=${1000}&category=${category[rand]}`)
+    ])
+  
+    const finalData = await Promise.all(data.map(data => data.json()))
+
+    finalData.forEach(value => {
+      questions.push(value[Math.floor(Math.random() * value.length)])
     })
 
-  await fetch(`${API_URL}clues?value=${400}&category=${category[rand]}`)
-    .then(data => data.json())
-    .then(data => {
-      questions.push(data[Math.floor(Math.random() * data.length)])
-    })
+    return questions
 
-  await fetch(`${API_URL}clues?value=${600}&category=${category[rand]}`)
-    .then(data => data.json())
-    .then(data => {
-      questions.push(data[Math.floor(Math.random() * data.length)])
-    })
-
-  await fetch(`${API_URL}clues?value=${800}&category=${category[rand]}`)
-    .then(data => data.json())
-    .then(data => {
-      questions.push(data[Math.floor(Math.random() * data.length)])
-    })
-
-  await fetch(`${API_URL}clues?value=${1000}&category=${category[rand]}`)
-    .then(data => data.json())
-    .then(data => {
-      questions.push(data[Math.floor(Math.random() * data.length)])
-    })
-
-
-  return questions
-
+  } catch(error) {
+    return res.status(500).json(err)
+  }
 }
 
 export {
