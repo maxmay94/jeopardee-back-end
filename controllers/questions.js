@@ -98,32 +98,10 @@ const play = async(req, res) => {
       }
     }
 
-    if(questions.length < 6) {
-    // for(questions.length in 6) {
-      let qs = []
-      let jep = `${API_URL}random?count=5`
-
-      if(qs.length < 5) {
-        await getJeopardy()
-        // await getJeopardy(jep)
-          .then(data => {
-            console.log(data)
-            data.forEach((q,i) => {
-              let tempQ = {
-                answer: data[i].answer,
-                question: data[i].question,
-                difficulty: data[i].value,
-                category: data[i].category.title
-              }
-              qs.push(tempQ)
-              console.log('Qs ~~>',qs)
-            })
-          })
-        }
-        questions.push(qs)
-        // console.log(questions)
+    while(questions.length < 6) {
+      questions.push(await fixData())
     }
-
+    console.log('questions.length ~~~~>> ',questions.length)
     return res.status(201).json(questions)
 
   } catch(err) {
@@ -131,16 +109,33 @@ const play = async(req, res) => {
   }
 }
 
-// async function getJeopardy(jep) {
-//   // ?value=200&category=14442
-//   return fetch(jep).then((res) => res.json())
-// }
+const fixData = async() => {
+  let qs = []
+  let jep = `${API_URL}random?count=5`
+
+  if(qs.length < 5) {
+    await getJeopardy()
+      .then(data => {
+        data.forEach((q,i) => {
+          let tempQ = {
+            answer: data[i].answer,
+            question: data[i].question,
+            difficulty: data[i].value,
+            category: data[i].category.title
+        }
+        qs.push(tempQ)
+        // console.log('Qs ~~>',qs)
+      })
+    })
+  }
+  return qs
+}
 
 const getJeopardy = async() => {
   let questions = []
   let category = [4,6,7,9,11,19,24,36,43,48,49,51,58,67,79,83,92,115,542]
   let rand = Math.floor(Math.random() * category.length)
-
+  console.log('RANDOM NUMBER ---->> ',rand)
   try{
     let data = await Promise.all([
       fetch(`${API_URL}clues?value=${200}&category=${category[rand]}`),
@@ -148,16 +143,12 @@ const getJeopardy = async() => {
       fetch(`${API_URL}clues?value=${600}&category=${category[rand]}`),
       fetch(`${API_URL}clues?value=${800}&category=${category[rand]}`),
       fetch(`${API_URL}clues?value=${1000}&category=${category[rand]}`)
-    ])
-  
+    ]) 
     const finalData = await Promise.all(data.map(data => data.json()))
-
     finalData.forEach(value => {
       questions.push(value[Math.floor(Math.random() * value.length)])
     })
-
     return questions
-
   } catch(error) {
     return res.status(500).json(err)
   }
