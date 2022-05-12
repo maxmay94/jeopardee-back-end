@@ -96,7 +96,6 @@ const play = async(req, res) => {
     return res.status(201).json(questions)
 
   } catch(err) {
-    console.log(err)
     return res.status(500).json(err)
   }
 }
@@ -134,9 +133,8 @@ const fixData = async() => {
 const getJeopardy = async() => {
   let questions = []
   let category = [4,6,7,9,11,19,24,36,43,48,49,51,58,67,79,83,92,115,542]
-  shuffleArray(category)
   let rand = Math.floor(Math.random() * category.length)
-  
+
   try{
     let data = await Promise.all([
       fetch(`${API_URL}clues?value=${200}&category=${category[rand]}`),
@@ -151,7 +149,6 @@ const getJeopardy = async() => {
     })
     return questions
   } catch(error) {
-    console.log('error')
     return res.status(500).json(err)
   }
 }
