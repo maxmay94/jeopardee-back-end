@@ -4,7 +4,6 @@ import fetch from 'node-fetch'
 
 const API_URL = process.env.API_BASE_URL
 
-
 const create = async(req, res) => {
   console.log('req.body ----->> ',req.body)
   try {
@@ -16,7 +15,7 @@ const create = async(req, res) => {
   }
 }
 
-const index = async(req, res) => {
+const index = async(req, res) => { 
   try {
     const questions = await Question.find({})
       .sort({category: 'desc'})
@@ -132,7 +131,7 @@ const fixData = async() => {
 
 const getJeopardy = async() => {
   let questions = []
-  let category = [4,6,7,9,11,19,24,36,43,48,49,51,58,67,79,83,92,115,542]
+  let category = [4,6,7,9,11,19,24,36,43,48,49,51,58,67,79,83,92,115,542,513,527,568]
   let rand = Math.floor(Math.random() * category.length)
 
   try{
