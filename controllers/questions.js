@@ -131,7 +131,7 @@ const fixData = async() => {
 
 const getJeopardy = async() => {
   let questions = []
-  let category = [4,6,7,9,11,19,24,36,43,48,49,51,58,67,79,83,92,115,542,513,527,568]
+  let category = [1,2,3,4,7,8,9,10,11,19,35,36,48,49,51,67,83,183,542,513]
   let rand = Math.floor(Math.random() * category.length)
 
   try{
@@ -146,6 +146,7 @@ const getJeopardy = async() => {
     finalData.forEach(value => {
       questions.push(value[Math.floor(Math.random() * value.length)])
     })
+    console.log(questions)
     return questions
   } catch(error) {
     return res.status(500).json(err)
