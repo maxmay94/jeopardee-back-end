@@ -5,7 +5,6 @@ import fetch from 'node-fetch'
 const API_URL = process.env.API_BASE_URL
 
 const create = async(req, res) => {
-  console.log('req.body ----->> ',req.body)
   try {
     const question = await new Question(req.body)
     await question.save()
@@ -63,8 +62,8 @@ const getCategories = async(req, res) => {
 }
 
 const play = async(req, res) => {
+  // return to this in future for a less hacky approach
   let qList = { one: '', two: '', three: '', four: '', five: '' }
-
   let questions = []
 
   try {
@@ -91,7 +90,6 @@ const play = async(req, res) => {
     while(questions.length < 6) {
       questions.push(await fixData())
     }
-    console.log('questions.length ~~~~>> ',questions.length)
     return res.status(201).json(questions)
 
   } catch(err) {
@@ -131,7 +129,7 @@ const fixData = async() => {
 
 const getJeopardy = async() => {
   let questions = []
-  let category = [1,2,3,4,7,8,9,10,11,19,35,36,48,49,51,67,83,183,542,513]
+  let category = [1,2,3,4,7,8,9,10,19,35,36,48,49,51,67,83,183,542,513]
   let rand = Math.floor(Math.random() * category.length)
 
   try{
@@ -146,7 +144,6 @@ const getJeopardy = async() => {
     finalData.forEach(value => {
       questions.push(value[Math.floor(Math.random() * value.length)])
     })
-    console.log(questions)
     return questions
   } catch(error) {
     return res.status(500).json(err)
