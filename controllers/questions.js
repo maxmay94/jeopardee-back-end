@@ -129,7 +129,7 @@ const fixData = async() => {
 
 const getJeopardy = async() => {
   let questions = []
-  let category = [1,2,3,4,7,8,9,10,19,35,36,48,49,51,67,83,183,542,513]
+  let category = [1,3,4,7,8,9,10,19,35,36,48,49,51,67,83,183,542,513]
   let rand = Math.floor(Math.random() * category.length)
 
   try{
