@@ -14,6 +14,7 @@ const create = async(req, res) => {
   }
 }
 
+
 const index = async(req, res) => { 
   try {
     const questions = await Question.find({})
@@ -157,5 +158,5 @@ export {
   update,
   deleteQuestion as delete,
   getCategories,
-  play
+  play,
 }
