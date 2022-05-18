@@ -24,10 +24,10 @@ app.use(function (req, res, next) {
 })
 
 //---------------------TEST---------------------------
-app.use(function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*')
-  next()
-})
+// app.use(function (req, res, next) {
+//   res.header('Access-Control-Allow-Origin', '*')
+//   next()
+// })
 //----------------------TEST--------------------------
 
 app.use(function (err, req, res, next) {
