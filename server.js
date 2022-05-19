@@ -16,8 +16,9 @@ app.use(cors({
   methods: '*'
 }))
 
+app.options('/questions/play', cors())
 app.get('/questions/play', function (req, res, next) {
-  res.json({msg: 'This is CORS-enabled for all origins!'})
+  res.json({ msg: 'This is CORS-enabled for all origins!' })
 })
 
 app.use(logger('dev'))
