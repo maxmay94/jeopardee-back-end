@@ -92,7 +92,7 @@ const play = async(req, res) => {
     while(questions.length < 6) {
       questions.push(await fixData())
     }
-    res.set('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     return res.status(201).json(questions)
     
   } catch(err) {
