@@ -12,7 +12,8 @@ import('./config/database.js')
 const app = express()
 
 app.use(cors({
-  origin: '*'
+  origin: '*',
+  methods: ['GET','PUT','POST']
 }))
 
 app.use(logger('dev'))
