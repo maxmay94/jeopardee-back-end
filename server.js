@@ -12,7 +12,7 @@ import('./config/database.js')
 const app = express()
 
 app.use(cors({
-  origin: '*',
+  origin: 'https://jeopardee.netlify.app',
   methods: ['GET','PUT','POST']
 }))
 
