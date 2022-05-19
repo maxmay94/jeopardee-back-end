@@ -67,10 +67,11 @@ const play = async(req, res) => {
   let qList = { one: '', two: '', three: '', four: '', five: '' }
   let questions = []
 
+  
   try {
     const categories = await Question.distinct('category')
     shuffleArray(categories)
-
+    
     for(const cat in categories){
       const category = await Question.where('category', categories[cat])
       let qs = []
@@ -87,12 +88,13 @@ const play = async(req, res) => {
         questions.push(qs)
       }
     }
-
+    
     while(questions.length < 6) {
       questions.push(await fixData())
     }
+    res.set('Access-Control-Allow-Origin', '*') //! TESTING 
     return res.status(201).json(questions)
-
+    
   } catch(err) {
     return res.status(500).json(err)
   }
