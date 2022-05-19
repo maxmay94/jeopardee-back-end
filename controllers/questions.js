@@ -10,7 +10,7 @@ const create = async(req, res) => {
     await question.save()
     return res.status(201).json(question)
   } catch(err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err + " create function")
   }
 }
 
@@ -21,7 +21,7 @@ const index = async(req, res) => {
       .sort({difficulty: 'desc'})
       return res.status(200).json(questions)
   } catch(err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err + " index function")
   }
 }
 
@@ -30,7 +30,7 @@ const show = async(req, res) => {
     const question = await Question.findById(req.params.id)
     return res.status(200).json(question)
   } catch(err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err + " show function")
   }
 }
 
@@ -39,7 +39,7 @@ const update = async(req, res) => {
     const question = await Question.findByIdAndUpdate(req.params.id, req.body)
     return res.status(201).json(question)
   } catch(err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err + " update function")
   }
 }
 
@@ -48,7 +48,7 @@ const deleteQuestion = async(req, res) => {
     await Question.findByIdAndDelete(req.params.id)
     return res.status(204).end()
   } catch(err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err + " delete function")
   }
 }
 
@@ -57,7 +57,7 @@ const getCategories = async(req, res) => {
     const categories = await Question.distinct('category')
     return res.status(201).json(categories)
   } catch(err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err + " getCategories function")
   }
 }
 
@@ -95,7 +95,7 @@ const play = async(req, res) => {
     return res.status(201).json(questions)
     
   } catch(err) {
-    return res.status(500).json(err + " this is not cool")
+    return res.status(500).json(err + " play function")
   }
 }
 
@@ -148,7 +148,7 @@ const getJeopardy = async() => {
     })
     return questions
   } catch(err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err + " getJeopardy function")
   }
 }
 
