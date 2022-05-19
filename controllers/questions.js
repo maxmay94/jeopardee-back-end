@@ -95,7 +95,7 @@ const play = async(req, res) => {
     return res.status(201).json(questions)
     
   } catch(err) {
-    return res.status(500).json(err)
+    return res.status(500).json(err + " this is not cool")
   }
 }
 
