@@ -13,8 +13,12 @@ const app = express()
 
 app.use(cors({
   origin: '*',
-  methods: ['GET','PUT','POST']
+  methods: '*'
 }))
+
+app.get('/questions/play', function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for all origins!'})
+})
 
 app.use(logger('dev'))
 app.use(express.json())
