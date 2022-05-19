@@ -14,7 +14,6 @@ const create = async(req, res) => {
   }
 }
 
-
 const index = async(req, res) => { 
   try {
     const questions = await Question.find({})
@@ -135,7 +134,7 @@ const getJeopardy = async() => {
   let category = [1,3,4,7,8,9,10,19,35,36,48,49,51,67,83,183,542,513]
   let rand = Math.floor(Math.random() * category.length)
 
-  try{
+  try {
     let data = await Promise.all([
       fetch(`${API_URL}clues?value=${200}&category=${category[rand]}`),
       fetch(`${API_URL}clues?value=${400}&category=${category[rand]}`),
@@ -148,7 +147,7 @@ const getJeopardy = async() => {
       questions.push(value[Math.floor(Math.random() * value.length)])
     })
     return questions
-  } catch(error) {
+  } catch(err) {
     return res.status(500).json(err)
   }
 }
