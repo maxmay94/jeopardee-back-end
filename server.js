@@ -14,7 +14,7 @@ const app = express()
 app.use(cors({
   origin: '*',
   methods: '*',
-  credentials: 'omit'
+  credentials: 'false'
 }))
 
 //------------------- TEST ZONE -------------------
