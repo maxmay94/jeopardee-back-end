@@ -13,12 +13,13 @@ const app = express()
 
 app.use(cors({
   origin: '*',
-  methods: '*'
+  methods: '*',
+  credentials: 'omit'
 }))
 
 //------------------- TEST ZONE -------------------
-app.options('/questions/play', cors())
-app.get('/questions/play', function (req, res, next) {
+app.options('/', cors())
+app.get('/', function (req, res, next) {
   res.json({ msg: 'This is CORS-enabled for all origins!' })
 })
 //------------------- TEST ZONE -------------------
@@ -31,7 +32,7 @@ app.use('/api/auth', authRouter)
 app.use('/api/questions', questionsRouter)
 
 app.use(function (req, res, next) {
-  res.status(404).json({ err: "Not found this is in server.js line 34" })
+  res.status(404).json({ err: "Not found -- this is in server.js line 34" })
 })
 
 app.use(function (err, req, res, next) {
