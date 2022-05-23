@@ -19,7 +19,7 @@ app.use(cors({
 
 //------------------- TEST ZONE -------------------
 app.options('*', cors())
-app.get('/', function (req, res, next) {
+app.get('/api/questions', function (req, res, next) {
   res.json({ msg: 'This is CORS-enabled for all origins!' })
 })
 //------------------- TEST ZONE -------------------

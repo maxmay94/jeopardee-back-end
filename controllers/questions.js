@@ -8,7 +8,7 @@ const create = async(req, res) => {
   try {
     const question = await new Question(req.body)
     await question.save()
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     return res.status(201).json(question)
   } catch(err) {
     return res.status(500).json(err + " create function")
@@ -20,7 +20,7 @@ const index = async(req, res) => {
     const questions = await Question.find({})
       .sort({category: 'desc'})
       .sort({difficulty: 'desc'})
-      // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+      res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
       return res.status(200).json(questions)
   } catch(err) {
     return res.status(500).json(err + " index function")
@@ -30,7 +30,7 @@ const index = async(req, res) => {
 const show = async(req, res) => {
   try {
     const question = await Question.findById(req.params.id)
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     return res.status(200).json(question)
   } catch(err) {
     return res.status(500).json(err + " show function")
@@ -40,7 +40,7 @@ const show = async(req, res) => {
 const update = async(req, res) => {
   try {
     const question = await Question.findByIdAndUpdate(req.params.id, req.body)
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     return res.status(201).json(question)
   } catch(err) {
     return res.status(500).json(err + " update function")
@@ -50,7 +50,7 @@ const update = async(req, res) => {
 const deleteQuestion = async(req, res) => {
   try {
     await Question.findByIdAndDelete(req.params.id)
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     return res.status(204).end()
   } catch(err) {
     return res.status(500).json(err + " delete function")
@@ -60,7 +60,7 @@ const deleteQuestion = async(req, res) => {
 const getCategories = async(req, res) => {
   try {
     const categories = await Question.distinct('category')
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     return res.status(201).json(categories)
   } catch(err) {
     return res.status(500).json(err + " getCategories function")
@@ -98,7 +98,7 @@ const play = async(req, res) => {
     while(questions.length < 6) {
       questions.push(await fixData())
     }
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     return res.status(201).json(questions)
     
   } catch(err) {
