@@ -22,6 +22,15 @@ app.options('*', cors())
 app.get('/api/questions', function (req, res, next) {
   res.json({ msg: 'This is CORS-enabled for all origins!' })
 })
+app.get('/api/profiles', function (req, res, next) {
+  res.json({ msg: 'This is CORS-enabled for all origins!' })
+})
+app.get('/api/auth', function (req, res, next) {
+  res.json({ msg: 'This is CORS-enabled for all origins!' })
+})
+app.get('/', function (req, res, next) {
+  res.json({ msg: 'This is CORS-enabled for all origins!' })
+})
 //------------------- TEST ZONE -------------------
 
 app.use(logger('dev'))
