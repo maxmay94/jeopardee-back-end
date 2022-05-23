@@ -14,14 +14,14 @@ const app = express()
 app.use(cors({
   origin: '*',
   methods: '*',
-  // credentials: 'false'
+  credentials: 'false'
 }))
 
 //------------------- TEST ZONE -------------------
-app.options('/api/questions/play', cors())
-app.get('/api/questions/play', function (req, res, next) {
-  res.json({ msg: 'This is CORS-enabled for all origins!' })
-})
+app.options('*', cors())
+// app.get('*', function (req, res, next) {
+//   res.json({ msg: 'This is CORS-enabled for all origins!' })
+// })
 //------------------- TEST ZONE -------------------
 
 app.use(logger('dev'))
