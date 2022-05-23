@@ -13,7 +13,7 @@ const app = express()
 
 app.use(cors({
   origin: '*',
-  methods: '*',
+  methods: 'GET', //! TESTING JUST GET used to be *
   credentials: 'false'
 }))
 
