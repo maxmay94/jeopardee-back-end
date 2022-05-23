@@ -31,11 +31,11 @@ app.use('/api/auth', authRouter)
 app.use('/api/questions', questionsRouter)
 
 app.use(function (req, res, next) {
-  res.status(404).json({ err: "Not found" })
+  res.status(404).json({ err: "Not found this is in server.js line 34" })
 })
 
 app.use(function (err, req, res, next) {
-  res.status(err.status || 500).json({ err: err.message })
+  res.status(err.status || 500).json({ err: err.message + " server.js line 38" })
 })
 
 export { app }
