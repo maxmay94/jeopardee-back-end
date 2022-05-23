@@ -62,6 +62,7 @@ const getCategories = async(req, res) => {
 }
 
 const play = async(req, res) => {
+  console.log('PLAY FUNCTION')
   // return to this in future for a less hacky approach
   let qList = { one: '', two: '', three: '', four: '', five: '' }
   let questions = []
