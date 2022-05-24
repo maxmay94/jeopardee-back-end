@@ -8,7 +8,7 @@ const create = async(req, res) => {
   try {
     const question = await new Question(req.body)
     await question.save()
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Methods', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Headers', '*') //! TESTING 
     return res.status(201).json(question)
@@ -22,7 +22,7 @@ const index = async(req, res) => {
     const questions = await Question.find({})
       .sort({category: 'desc'})
       .sort({difficulty: 'desc'})
-      // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+      res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
       // res.setHeader('Access-Control-Allow-Methods', '*') //! TESTING 
       // res.setHeader('Access-Control-Allow-Headers', '*') //! TESTING 
       return res.status(200).json(questions)
@@ -34,7 +34,7 @@ const index = async(req, res) => {
 const show = async(req, res) => {
   try {
     const question = await Question.findById(req.params.id)
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Methods', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Headers', '*') //! TESTING 
     return res.status(200).json(question)
@@ -46,7 +46,7 @@ const show = async(req, res) => {
 const update = async(req, res) => {
   try {
     const question = await Question.findByIdAndUpdate(req.params.id, req.body)
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Methods', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Headers', '*') //! TESTING 
     return res.status(201).json(question)
@@ -58,7 +58,7 @@ const update = async(req, res) => {
 const deleteQuestion = async(req, res) => {
   try {
     await Question.findByIdAndDelete(req.params.id)
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING
     // res.setHeader('Access-Control-Allow-Methods', '*') //! TESTING  
     // res.setHeader('Access-Control-Allow-Headers', '*') //! TESTING 
     return res.status(204).end()
@@ -70,7 +70,7 @@ const deleteQuestion = async(req, res) => {
 const getCategories = async(req, res) => {
   try {
     const categories = await Question.distinct('category')
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Methods', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Headers', '*') //! TESTING 
     return res.status(201).json(categories)
@@ -110,7 +110,7 @@ const play = async(req, res) => {
     while(questions.length < 6) {
       questions.push(await fixData())
     }
-    // res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
+    res.setHeader('Access-Control-Allow-Origin', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Methods', '*') //! TESTING 
     // res.setHeader('Access-Control-Allow-Headers', '*') //! TESTING 
     return res.status(201).json(questions)
