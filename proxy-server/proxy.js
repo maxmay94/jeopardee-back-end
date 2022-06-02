@@ -1,5 +1,5 @@
-const Koa = require("koa")
-const cors = require("@koa/cors")
+import Koa from "koa"
+import cors from "@koa/cors"
 const app = new Koa()
 const port = process.env.PORT || 3000
 
