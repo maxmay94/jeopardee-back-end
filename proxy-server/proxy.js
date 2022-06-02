@@ -7,7 +7,8 @@ app.use(cors())
 
 app.use(
   proxy("/", {
-    target: "https://jeopardee.netlify.app/",
+    // target: "https://jeopardee.netlify.app/", 
+    target: "https://jeopardee-back-end.herokuapp.com/",
     changeOrigin: true,
     logs: true,
   })
