@@ -5,5 +5,13 @@ const port = process.env.PORT || 3000
 
 app.use(cors())
 
+app.use(
+  proxy("/", {
+    target: "https://jeopardee.netlify.app/",
+    changeOrigin: true,
+    logs: true,
+  })
+)
+
 app.listen(port)
 console.log(`listening on port ${port}`)
